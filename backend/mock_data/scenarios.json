@@ -1,0 +1,292 @@
+{
+  "scenarios": [
+    {
+      "id": "S1",
+      "name": "Monsoon Emergency",
+      "description": "Heavy monsoon causes simultaneous flooding in Surjani Town and dangerous heatwave in North Karachi",
+      "crises": ["urban_flooding", "heatwave"],
+      "social_signals": [
+        {
+          "id": "SS001",
+          "source_type": "citizen",
+          "platform": "Twitter",
+          "text": "Pani aa gaya! Surjani Town mein road block ho gaya hai. Gaadi nahi nikal sakti. #KarachiFloods",
+          "location": "Surjani Town",
+          "coordinates": {"lat": 24.9801, "lng": 67.0359},
+          "timestamp": "2026-05-15T14:23:00Z",
+          "credibility": 65
+        },
+        {
+          "id": "SS002",
+          "source_type": "verified",
+          "platform": "Twitter",
+          "text": "ALERT: Surjani Town sector 11/C completely waterlogged. Residents urged to stay indoors. @KarachiMetro @DMCKarachi",
+          "location": "Surjani Town",
+          "coordinates": {"lat": 24.9815, "lng": 67.0342},
+          "timestamp": "2026-05-15T14:31:00Z",
+          "credibility": 88
+        },
+        {
+          "id": "SS003",
+          "source_type": "news_outlet",
+          "platform": "Geo News",
+          "text": "Breaking: 45mm rainfall recorded in Surjani Town in 2 hours. Multiple roads flooded, rescue teams dispatched.",
+          "location": "Surjani Town",
+          "coordinates": {"lat": 24.9801, "lng": 67.0359},
+          "timestamp": "2026-05-15T14:45:00Z",
+          "credibility": 92
+        },
+        {
+          "id": "SS004",
+          "source_type": "citizen",
+          "platform": "WhatsApp",
+          "text": "North Karachi mein garmi bohat zyada hai. Ac nahi hai ghar mein, 3 log behosh ho gaye sector 11 mein",
+          "location": "North Karachi",
+          "coordinates": {"lat": 24.9924, "lng": 67.0637},
+          "timestamp": "2026-05-15T15:00:00Z",
+          "credibility": 60
+        },
+        {
+          "id": "SS005",
+          "source_type": "field_team",
+          "platform": "CIRO Field App",
+          "text": "Field report: North Karachi sector 14B — 3 heat exhaustion cases confirmed. Temperature 43C in shade. Medical assistance needed urgently.",
+          "location": "North Karachi",
+          "coordinates": {"lat": 24.9930, "lng": 67.0650},
+          "timestamp": "2026-05-15T15:10:00Z",
+          "credibility": 97
+        }
+      ],
+      "weather_snapshot": {
+        "zone": "Karachi North/Central",
+        "rainfall_mm": 45,
+        "temperature_c": 43,
+        "wind_kmh": 12,
+        "humidity_pct": 78,
+        "alert_level": "red",
+        "forecast": "Continued heavy rain next 3 hours, temperature expected to rise to 45C"
+      },
+      "traffic_snapshot": {
+        "surjani_road": {"congestion_level": "severe", "avg_speed_kmh": 4, "incident_reported": true},
+        "northern_bypass": {"congestion_level": "high", "avg_speed_kmh": 18, "incident_reported": false},
+        "university_road": {"congestion_level": "moderate", "avg_speed_kmh": 28, "incident_reported": false}
+      }
+    },
+    {
+      "id": "S2",
+      "name": "Industrial Disaster",
+      "description": "Chemical plant fire in Korangi Industrial Area and multi-vehicle accident on Lyari Expressway",
+      "crises": ["industrial_fire", "road_accident"],
+      "social_signals": [
+        {
+          "id": "SS006",
+          "source_type": "citizen",
+          "platform": "Twitter",
+          "text": "Korangi mein koi factory mein aag lag gayi! Kala dhuan aa raha hai. Itna chemical smell. Bhaago yahan se! #KorangiFire",
+          "location": "Korangi Industrial Area",
+          "coordinates": {"lat": 24.8269, "lng": 67.1228},
+          "timestamp": "2026-05-15T11:15:00Z",
+          "credibility": 70
+        },
+        {
+          "id": "SS007",
+          "source_type": "news_outlet",
+          "platform": "Dawn News",
+          "text": "BREAKING: Major fire breaks out at chemical processing unit in Korangi Industrial Area. Toxic smoke spreading towards residential zone. Fire brigade en route.",
+          "location": "Korangi Industrial Area",
+          "coordinates": {"lat": 24.8265, "lng": 67.1235},
+          "timestamp": "2026-05-15T11:28:00Z",
+          "credibility": 94
+        },
+        {
+          "id": "SS008",
+          "source_type": "verified",
+          "platform": "Twitter",
+          "text": "Lyari Expressway accident: 3 tankers involved in collision near Baloch Colony interchange. Multiple injuries reported. Avoid expressway. @TrafficPolicKarachi",
+          "location": "Lyari Expressway",
+          "coordinates": {"lat": 24.8650, "lng": 66.9950},
+          "timestamp": "2026-05-15T11:40:00Z",
+          "credibility": 89
+        },
+        {
+          "id": "SS009",
+          "source_type": "field_team",
+          "platform": "CIRO Field App",
+          "text": "Field report: Korangi fire confirmed — paint factory, unit 47B. Approx 200m spread. Hazmat situation — residents within 500m being evacuated.",
+          "location": "Korangi Industrial Area",
+          "coordinates": {"lat": 24.8268, "lng": 67.1230},
+          "timestamp": "2026-05-15T11:50:00Z",
+          "credibility": 97
+        },
+        {
+          "id": "SS010",
+          "source_type": "citizen",
+          "platform": "Facebook",
+          "text": "Bhai Lyari Expressway pe bahut bura accident hua hai. Tanker palat gaya. Puri sadak band hai. Ambulance wala bhi nahi ja sakta traffic mein.",
+          "location": "Lyari Expressway",
+          "coordinates": {"lat": 24.8645, "lng": 66.9948},
+          "timestamp": "2026-05-15T11:55:00Z",
+          "credibility": 62
+        }
+      ],
+      "weather_snapshot": {
+        "zone": "Karachi South/East",
+        "rainfall_mm": 0,
+        "temperature_c": 38,
+        "wind_kmh": 22,
+        "humidity_pct": 55,
+        "alert_level": "orange",
+        "forecast": "High winds may spread fire. No rain expected."
+      },
+      "traffic_snapshot": {
+        "lyari_expressway": {"congestion_level": "blocked", "avg_speed_kmh": 0, "incident_reported": true},
+        "korangi_road": {"congestion_level": "severe", "avg_speed_kmh": 6, "incident_reported": true},
+        "hub_river_road": {"congestion_level": "moderate", "avg_speed_kmh": 30, "incident_reported": false}
+      }
+    },
+    {
+      "id": "S3",
+      "name": "False Alarm Test",
+      "description": "Reported flooding in Gulshan-e-Iqbal (actually burst water main) + reported accident on Shahrae Faisal",
+      "crises": ["suspected_flooding", "suspected_accident"],
+      "social_signals": [
+        {
+          "id": "SS011",
+          "source_type": "citizen",
+          "platform": "Twitter",
+          "text": "Gulshan-e-Iqbal Block 10 mein barish se pani bhar gaya! Flood jaisi situation ban gayi. Help chahiye! @DMCKarachi",
+          "location": "Gulshan-e-Iqbal",
+          "coordinates": {"lat": 24.9218, "lng": 67.0921},
+          "timestamp": "2026-05-15T09:05:00Z",
+          "credibility": 60
+        },
+        {
+          "id": "SS012",
+          "source_type": "citizen",
+          "platform": "WhatsApp",
+          "text": "G-9 area mein roads pe pani hi pani. Barish nahi ho rahi thi phir bhi water aa gaya. Kuch pipe phata lagta hai.",
+          "location": "Gulshan-e-Iqbal",
+          "coordinates": {"lat": 24.9210, "lng": 67.0915},
+          "timestamp": "2026-05-15T09:12:00Z",
+          "credibility": 55
+        },
+        {
+          "id": "SS013",
+          "source_type": "field_team",
+          "platform": "CIRO Field App",
+          "text": "Field verification complete: Gulshan Block 10 — NOT flood related. 24-inch water main burst on main road. KWSB notified. Isolated to 200m stretch.",
+          "location": "Gulshan-e-Iqbal",
+          "coordinates": {"lat": 24.9218, "lng": 67.0921},
+          "timestamp": "2026-05-15T09:45:00Z",
+          "credibility": 98
+        },
+        {
+          "id": "SS014",
+          "source_type": "verified",
+          "platform": "Twitter",
+          "text": "Accident reported on Shahrae Faisal near PIDC. Traffic slowdown but no major injuries per our reporter on ground. @GeoTraffic",
+          "location": "Shahrae Faisal",
+          "coordinates": {"lat": 24.8784, "lng": 67.0622},
+          "timestamp": "2026-05-15T09:20:00Z",
+          "credibility": 82
+        },
+        {
+          "id": "SS015",
+          "source_type": "field_team",
+          "platform": "CIRO Field App",
+          "text": "Shahrae Faisal minor fender-bender. Vehicles moved to side. No injuries. Traffic police on scene. Normal flow resuming.",
+          "location": "Shahrae Faisal",
+          "coordinates": {"lat": 24.8784, "lng": 67.0622},
+          "timestamp": "2026-05-15T09:50:00Z",
+          "credibility": 96
+        }
+      ],
+      "weather_snapshot": {
+        "zone": "Karachi Central",
+        "rainfall_mm": 0,
+        "temperature_c": 36,
+        "wind_kmh": 8,
+        "humidity_pct": 50,
+        "alert_level": "green",
+        "forecast": "Clear skies, no rainfall expected"
+      },
+      "traffic_snapshot": {
+        "shahrae_faisal": {"congestion_level": "moderate", "avg_speed_kmh": 22, "incident_reported": true},
+        "university_road": {"congestion_level": "low", "avg_speed_kmh": 45, "incident_reported": false}
+      }
+    },
+    {
+      "id": "S4",
+      "name": "Peak Hour Crisis",
+      "description": "Power outage across SITE Industrial Area during peak hours + Road collapse on Malir Road",
+      "crises": ["power_outage", "road_collapse"],
+      "social_signals": [
+        {
+          "id": "SS016",
+          "source_type": "news_outlet",
+          "platform": "ARY News",
+          "text": "BREAKING: Major power breakdown in SITE Industrial Area. Over 200 factories affected. K-Electric failure reported. Rush hour chaos.",
+          "location": "SITE Industrial Area",
+          "coordinates": {"lat": 24.9120, "lng": 67.0050},
+          "timestamp": "2026-05-15T17:30:00Z",
+          "credibility": 93
+        },
+        {
+          "id": "SS017",
+          "source_type": "citizen",
+          "platform": "Twitter",
+          "text": "SITE mein light nahi hai. Factory band ho gayi. Hazaar workers sadak pe aa gaye. K-Electric sun raha hai koi? #KELfailure #SITE",
+          "location": "SITE Industrial Area",
+          "coordinates": {"lat": 24.9115, "lng": 67.0055},
+          "timestamp": "2026-05-15T17:35:00Z",
+          "credibility": 68
+        },
+        {
+          "id": "SS018",
+          "source_type": "field_team",
+          "platform": "CIRO Field App",
+          "text": "Field confirmed: Malir Road bridge section collapsed near Malir Halt. 2 vehicles fell into ditch. 6 injured, 1 critical. Road completely blocked.",
+          "location": "Malir Road",
+          "coordinates": {"lat": 24.9000, "lng": 67.1800},
+          "timestamp": "2026-05-15T17:45:00Z",
+          "credibility": 98
+        },
+        {
+          "id": "SS019",
+          "source_type": "verified",
+          "platform": "Twitter",
+          "text": "URGENT: Malir Road collapse confirmed near Malir Halt. Avoid entire stretch. Emergency services rushing to scene. @KarachiMetro",
+          "location": "Malir Road",
+          "coordinates": {"lat": 24.8998, "lng": 67.1802},
+          "timestamp": "2026-05-15T17:50:00Z",
+          "credibility": 91
+        },
+        {
+          "id": "SS020",
+          "source_type": "citizen",
+          "platform": "Facebook",
+          "text": "Malir Halt ke pass road gir gaya hai bhai. Bahut bura manzar hai. Gaadi phaas gayi hai andar. Allah reham kare.",
+          "location": "Malir Road",
+          "coordinates": {"lat": 24.9002, "lng": 67.1798},
+          "timestamp": "2026-05-15T17:48:00Z",
+          "credibility": 65
+        }
+      ],
+      "weather_snapshot": {
+        "zone": "Karachi West/East",
+        "rainfall_mm": 0,
+        "temperature_c": 40,
+        "wind_kmh": 15,
+        "humidity_pct": 45,
+        "alert_level": "yellow",
+        "forecast": "Hot dry conditions. Peak traffic hour 5-7pm."
+      },
+      "traffic_snapshot": {
+        "super_highway": {"congestion_level": "high", "avg_speed_kmh": 20, "incident_reported": false},
+        "malir_road": {"congestion_level": "blocked", "avg_speed_kmh": 0, "incident_reported": true},
+        "m9_motorway": {"congestion_level": "moderate", "avg_speed_kmh": 65, "incident_reported": false},
+        "site_area_roads": {"congestion_level": "severe", "avg_speed_kmh": 5, "incident_reported": true}
+      }
+    }
+  ]
+}

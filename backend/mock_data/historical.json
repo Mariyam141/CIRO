@@ -1,0 +1,66 @@
+{
+  "report_period": "Last 30 days",
+  "generated_at": "2026-05-15T00:00:00Z",
+  "city": "Karachi",
+  "flooding_frequency": {
+    "surjani_town": {"incidents": 8, "avg_depth_cm": 45, "avg_duration_hours": 3.5, "peak_month": "May-August"},
+    "orangi_town": {"incidents": 6, "avg_depth_cm": 38, "avg_duration_hours": 2.8, "peak_month": "July-August"},
+    "gulshan_e_iqbal": {"incidents": 3, "avg_depth_cm": 22, "avg_duration_hours": 1.5, "peak_month": "July"},
+    "lyari": {"incidents": 5, "avg_depth_cm": 50, "avg_duration_hours": 4.2, "peak_month": "August"},
+    "malir": {"incidents": 4, "avg_depth_cm": 30, "avg_duration_hours": 2.0, "peak_month": "July-August"}
+  },
+  "avg_response_times_minutes": {
+    "rescue_team": {"current_avg": 18, "best_recorded": 8, "target": 10},
+    "medical_team": {"current_avg": 14, "best_recorded": 6, "target": 8},
+    "police_unit": {"current_avg": 11, "best_recorded": 5, "target": 7},
+    "fire_brigade": {"current_avg": 16, "best_recorded": 9, "target": 10}
+  },
+  "resource_utilization_rates": {
+    "rescue_teams": "58%",
+    "medical_teams": "71%",
+    "ambulances": "83%",
+    "police_units": "45%",
+    "water_tankers": "39%"
+  },
+  "false_alarm_rates": {
+    "social_media_reports": "42%",
+    "news_reports": "8%",
+    "citizen_calls_1122": "31%",
+    "field_team_reports": "2%",
+    "overall_system": "34%"
+  },
+  "crisis_types_30_days": [
+    {"type": "urban_flooding", "count": 12, "avg_severity": "high", "avg_affected_population": 8500},
+    {"type": "road_accident", "count": 28, "avg_severity": "medium", "avg_affected_population": 200},
+    {"type": "heatwave", "count": 4, "avg_severity": "high", "avg_affected_population": 45000},
+    {"type": "power_outage", "count": 9, "avg_severity": "medium", "avg_affected_population": 12000},
+    {"type": "industrial_fire", "count": 2, "avg_severity": "critical", "avg_affected_population": 3500},
+    {"type": "infrastructure_failure", "count": 6, "avg_severity": "medium", "avg_affected_population": 5000}
+  ],
+  "seasonal_patterns": {
+    "monsoon_season": {
+      "months": "June-September",
+      "flooding_probability": "78%",
+      "avg_response_degradation_pct": 35,
+      "resource_demand_multiplier": 2.8
+    },
+    "heat_season": {
+      "months": "April-June",
+      "heatwave_probability": "65%",
+      "medical_demand_multiplier": 3.2,
+      "vulnerable_population_at_risk": 180000
+    }
+  },
+  "stakeholder_coordination": {
+    "current_avg_notified_per_crisis": 2,
+    "target": 6,
+    "key_stakeholders": ["DMC", "Rescue1122", "TrafficPolice", "KWSB", "KElectric", "NationalDisasterMgmt"]
+  },
+  "lessons_learned": [
+    "Surjani Town flooding worsens when drainage not cleared before monsoon",
+    "North Karachi heat emergencies correlate with 12h+ power outages",
+    "Lyari Expressway accidents spike on Friday afternoons 3-5pm",
+    "SITE industrial incidents require hazmat pre-positioning from July",
+    "Social media false alarm rate drops 60% when cross-referenced with weather data"
+  ]
+}

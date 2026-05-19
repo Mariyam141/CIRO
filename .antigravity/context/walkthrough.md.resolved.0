@@ -1,0 +1,23 @@
+# CIRO Mobile App - Part 2 Implementation
+
+## Summary of Changes
+Implemented the mobile UI shell and state management logic as defined in the agent prompt for Part 2 of the CIRO app.
+
+### State Management
+- **`store/crisisStore.ts`**: Created a Zustand store to handle agent states, logs, and simulation output, mirroring the backend structures.
+
+### UI Components
+- **`components/AgentCard.tsx`**: A dynamic component rendering individual agent details with state-based animated borders, streaming log outputs, and collapsible JSON result sections.
+- **`components/LogEntry.tsx`**: A component designed to map `executionLogs` to readable lines with icons matching severity.
+
+### Screens & Routing
+- **`app/_layout.tsx`**: Global stack layout with dark theme configurations.
+- **`app/(tabs)/_layout.tsx`**: Bottom tab navigation setup to route between Home, Agents, Map, Actions, Alerts, and Logs.
+- **`app/(tabs)/index.tsx`**: The main Home screen. Implemented the reporting UI, Live Crisis list, Signal Feed placeholders, and integrated the complete `runDemoSequence` and `runFalseAlarmDemo` functions.
+- **`app/(tabs)/agents.tsx`**: The Agent Activity screen. Created the full flow of interconnected `AgentCard` components and appended the "Baseline Comparison" UI at the bottom.
+
+## Validation Results
+We successfully typed all data models. Please start your Expo project (`npx expo start`) and test the app in Expo Go on your physical device. Make sure to press the "Run Demo" buttons to see the backend interactions and agent card animations running live!
+
+> [!TIP]
+> Ensure your `BASE_URL` in `constants/config.ts` matches your current Local IP exactly before testing the backend integration.

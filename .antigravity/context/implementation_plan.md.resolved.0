@@ -1,0 +1,58 @@
+# CIRO Mobile App - Part 2
+
+This plan outlines the creation of the CIRO mobile app's core frontend files based on `agent_prompt.md`. We will create the UI shell, state management, and the logic to communicate with the backend. 
+
+## User Review Required
+
+> [!WARNING]
+> The API `BASE_URL` in `constants/config.ts` is currently planned to use `http://192.168.1.x:8000`. You will need to update this file to match your actual local IP address so the Expo app on your phone can reach the backend.
+
+## Open Questions
+
+> [!IMPORTANT]
+> Are there any specific vector icons packages you prefer, or is `@expo/vector-icons` fully sufficient for all icons described?
+
+## Proposed Changes
+
+### Configuration
+#### [NEW] [config.ts](file:///c:/Users/Addministrator/ciro/constants/config.ts)
+Will contain the `BASE_URL` and `DEMO_DELAY` constants.
+
+#### [NEW] [colors.ts](file:///c:/Users/Addministrator/ciro/constants/colors.ts)
+Will contain the global color palette for the app.
+
+---
+### State Management
+#### [NEW] [crisisStore.ts](file:///c:/Users/Addministrator/ciro/store/crisisStore.ts)
+Will contain the Zustand store definitions for the `crisisStore`, defining `AgentState`, `Crisis`, `Action`, `LogEntry` types and the `useCrisisStore` hook.
+
+---
+### Components
+#### [NEW] [AgentCard.tsx](file:///c:/Users/Addministrator/ciro/components/AgentCard.tsx)
+Will be the UI for displaying individual agent states, with streaming log lines and a collapsible JSON output section, with pulsing animation for thinking states.
+
+#### [NEW] [LogEntry.tsx](file:///c:/Users/Addministrator/ciro/components/LogEntry.tsx)
+Will display a single execution log entry with timestamps, colored agent names, icons, and fade-slide-in animations.
+
+---
+### App Screens & Layouts
+#### [NEW] [_layout.tsx](file:///c:/Users/Addministrator/ciro/app/_layout.tsx)
+The root layout providing a stack navigator and dark status bar.
+
+#### [NEW] [_layout.tsx](file:///c:/Users/Addministrator/ciro/app/(tabs)/_layout.tsx)
+The bottom tab navigator with 6 tabs (Home, Agents, Map, Actions, Alerts, Logs).
+
+#### [NEW] [index.tsx](file:///c:/Users/Addministrator/ciro/app/(tabs)/index.tsx)
+The Home screen containing signal inputs, active crises, quick actions, live signal feed, and the demo buttons. This connects to `crisisStore` and invokes backend APIs using Axios.
+
+#### [NEW] [agents.tsx](file:///c:/Users/Addministrator/ciro/app/(tabs)/agents.tsx)
+The Agent Activity screen showing 5 `AgentCard`s in a sequence and a baseline comparison table.
+
+## Verification Plan
+
+### Automated Tests
+- Type checking with `tsc` to verify no TypeScript compilation errors exist.
+
+### Manual Verification
+- Review the `index.tsx` and `agents.tsx` renders by starting the Expo server (`npx expo start`) and testing it in the Expo Go app on a physical device or emulator.
+- Trigger "Run Demo" and ensure logs stream correctly and APIs are being called properly.

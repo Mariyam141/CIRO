@@ -1,0 +1,4 @@
+- [x] Update `store/crisisStore.ts` with `isDegradedMode` state
+- [x] Create `app/(tabs)/logs.tsx`
+- [x] Update `app/(tabs)/index.tsx` for demo polish and robustness
+- [x] Create `README.md`

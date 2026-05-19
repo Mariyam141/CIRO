@@ -1,0 +1,279 @@
+Challenge 3: Crisis Intelligence & Response Orchestrator (CIRO)
+Challenge Overview
+Metropolitans, globally and in Pakistan, frequently faces localized crises such as:
+● urban flooding
+● heatwaves
+● road blockages
+● accidents
+● infrastructure failures
+However, response systems are:
+● fragmented
+● reactive
+● slow to coordinate
+Critical signals (social media, maps, weather, reports) exist — but are not converted into
+actionable decisions in real time.
+
+Problem Statement
+Build an Agentic AI System that:
+1. Ingests multi-source signals
+2. Detects emerging crisis situations
+3. Generates coordinated response actions
+4. Simulates execution of those actions
+5. Shows impact of decisions
+
+Mandatory Requirement: Google Antigravity
+Teams MUST use Google Antigravity to:
+● orchestrate multi-agent workflows
+● plan and execute decisions
+● integrate tools (Maps, Search, APIs)
+● simulate coordinated actions
+Example Scenario
+Input Signals:
+● Social media:
+“Flash flood happening at George Town for past 30 mins" OR
+
+“G-10 mein pani bhar gaya hai, gaariyan phans gayi hain”
+
+● Weather:
+§ heavy rainfall alert
+● Maps:
+§ traffic congestion spike
+
+Expected Output
+Detected Situation:
+Urban flooding (G-10/ George Town)
+Confidence:
+High
+Impact:
+- Traffic blocked
+- Vehicles stranded
+Recommended Actions:
+- Redirect traffic via alternate routes
+- Dispatch emergency services
+Simulated Execution:
+- Route updated on map
+- Alert sent to users
+- Emergency ticket created
+Outcome:
+Reduced congestion in simulation
+
+System Requirements
+1. Multi-Source Input Processing
+· Accept:
+§ text inputs (complaints, posts)
+§ simulated APIs (weather, traffic)
+· Handle noisy, informal language
+2. Event Detection
+· Identify:
+§ anomalies
+§ clusters
+§ crisis signals
+
+3. Reasoning & Situation Analysis
+· Combine signals to:
+§ infer situation
+§ estimate severity
+· Provide confidence level + explanation
+4. Action Planning
+
+· Generate coordinated response actions:
+§ routing
+§ alerts
+§ resource allocation
+5. Action Simulation (CRITICAL)
+System must simulate:
+· traffic rerouting
+· emergency dispatch
+· alerts/notifications
+Simulation examples:
+· updating mock map routes
+· generating emergency tickets
+· sending simulated alerts
+· updating system status
+6. Outcome Visualization
+Show:
+· before vs after scenario
+· impact of actions
+· system logs
+7. Agentic Workflow (MANDATORY)
+System must demonstrate:
+· multiple agents OR structured reasoning pipeline
+· interaction between agents
+· planning → decision → execution
+
+Deliverables
+1. Working Prototype with Mobile App (MUST) and Web App (Optional)
+2. Demo Video (3–5 minutes)
+Must show:
+· multi-source input
+· detected crisis
+· action planning
+· simulated response
+· outcome
+3. Agent Trace / Logs
+· reasoning steps
+· agent decisions
+· action execution
+4. Documentation (README)
+Include:
+· system architecture
+· Antigravity usage
+· tools/APIs used
+· assumptions
+
+Evaluation Criteria
+1. Use of Google Antigravity — 25%
+· Core orchestration handled via Antigravity
+· Multi-agent planning + execution
+· Tool integration
+2. Agentic Reasoning & Coordination — 20%
+· Multi-agent interaction
+· Logical reasoning
+· Decision-making quality
+3. Situation Detection & Analysis — 20%
+· Accuracy of event detection
+· Quality of insights
+· Clear explanations
+4. Action Planning & Simulation — 15%
+· Realistic response actions
+· Effective simulation
+· Clear system state change
+5. Technical Implementation — 10%
+· Clean architecture
+· API integration
+· robustness
+6. Innovation & UX — 10%
+· creativity
+· usability
+· demo clarity
+Important Guidelines
+● Use simulated datasets/APIs where needed
+● Avoid real sensitive data
+● Focus on decision-making, not just visualization
+● Must show end-to-end workflow
+
+
+
+
+Q1. Can team leads apply or pitch solo without a team?
+No. A minimum team of 2 members is mandatory for pitching rounds. Max is 5 members
+Q2. Are tech enthusiasts under 18 eligible for the hackathon?
+The age limit for participants MUST 18 – 45 years. 
+Q3. What is the submission process and timeline?
+Selected participants should have received the Challenges Document and a Google Form for Challenge Selection. Please read both thoroughly.
+Important Dates:
+May 15, 2026  	Deadline to select and submit your challenge/idea. You need to select only 1 challenge and the deploy your solution
+May 20, 2026	Final project submission deadline (Instructions for submission will be shared separately)
+May 25–26, 2026   	Virtual Regional Pitching Rounds
+June 07, 2026	National Finale in Islamabad (Logistic support will be provided ONLY from Lahore/ Karachi to Islamabad)
+From all submissions, 10–15 teams will be shortlisted from each regions for virtual pitching. Regional winners/runners-up will qualify for the National Finale.
+Q4. Can we use tools like n8n, Google AI Studio, Vertex AI, LangGraph, CrewAI, or external services with Antigravity?
+Yes. As long as Antigravity remains the main orchestrator and development logs/ reasoning traces can be submitted. You are free to build agents in any framework (Vertex AI, LangGraph, etc.) and connect them via Antigravity.
+Q5. Are the provided $5 credits enough for the hackathon?
+Each team member will get $5 credit. We can facilitate teams with additional GCP credits as required. These credits are intended for solution development on Google Cloud Platform services.
+Q7. Can we use other LLMs inside Antigravity?
+Yes. As long as your solution operates within the Antigravity environment and Antigravity is the main orchestrator, you may integrate other LLMs.
+Q8. Is Mobile app mandatory?
+Yes. Yes Mobile app is mandatory for all challenges. Web app is optional.
+Q9. Do we have to submit the final solution on May 15?
+No. May 15 is only for challenge/idea selection. The final project submission is due May 20, 2026.
+Q10. Can we use our previous Phase #1 project in the Hackathon?
+No, You will build your solution based on the explicit requirements of the selected challenge.
+Q11. Can we make changes in the team composition?
+Yes. You may make changes to your team composition during the development phase. However, you will be required to submit the finalized team details along with your final project submission.
+
+App & Platform Requirements
+Q12: Is a full mobile app required, or can teams build a web app/dashboard and keep the mobile app minimal (e.g., just for alerts)?
+A: A working prototype with a mobile app is mandatory across all challenges, while a web app or dashboard is strictly optional.
+Q13: Are Progressive Web Apps (PWAs) allowed (converting a web app to an APK), or does the app need to be built and compiled natively (e.g., using Kotlin)?
+A: Only APKs are acceptable.
+Q14: Can teams use a pre-existing MVP and simply integrate Antigravity features into it, or must the project be built entirely from scratch?
+A: The project must be built in Antigravity and from scratch.
+Q15: Are participants allowed to build an app that falls outside of the 4 official challenges?
+A:  NO
+
+Antigravity & AI Tools
+Q16: Are participants strictly required to use Antigravity, or are other AI models and chatbots (like Claude Pro) allowed?
+A: You must use Google Antigravity as the core platform or orchestrator. However, you are allowed to use external LLMs, APIs, databases, and visualization tools as long as Antigravity remains in control of the central agentic logic and workflows.
+Q17: What is the minimum required use of Antigravity? Does it only need to act as the agent planner?
+A: Antigravity must be the primary orchestrator for complex workflows like intent understanding, reasoning, planning, tool/API integration, and action execution.
+Q18: Can teams use extensions within Antigravity?
+A: Yes
+Q19: Are there Antigravity credits provided, and is a $5 credit limit for the whole team enough to build the required solution?
+A: Only Google Cloud Credits are provided. Initially $5 each and can be asked multiple times for each member if expended.
+
+APIs & Technical Implementation
+Q20: How should teams provide or log the prompts and transactions they used?
+A: You must submit Antigravity agent traces or logs that explicitly show the IDE's reasoning steps, task plans, tool calls, decision rationale, action execution, and fallback/recovery behavior.
+Q21: Where can teams get API keys for services like Google Maps, weather data, or emergency alerts?
+A: All Google Cloud APIs can be used through Cloud Credits. For other use cases, any free versions of APIs can be used.
+
+Submissions & Demos
+Q22: For the demo video, can the presentation be in Urdu, or is English mandatory? Are AI-generated voices allowed for the voiceover, or must participants use their real voices?
+A: Your presentations should clearly showcase the product and solution you have built. There is no compulsion of English or method to make the demos.
+Q23: If the Antigravity setup being used doesn't natively support simulation, how should the team demonstrate the workflow?
+A:  Antigravity is an IDE. For simulation of workflows, you will have to simulate the use case through the app you have built.
+Q24: For the grand finale, do teams need to build a brand-new app, or are they expected to improve the same app submitted during the regional rounds?
+A: Details for the Final challenge will be shared after Regional Rounds are over.
+
+Important Note: Please ask all questions within the official community channels or Discord. Queries will not be addressed via direct messages.
+SHARED SUBMISSION CHECKLIST
+Working prototype: Mobile app is mandatory for all challenges. Web app/dashboard is optional unless needed for demonstration.
+Demo video: 3-5 minutes for Challenges 1-3; around 3 minutes for Challenge 4. Must show agentic workflow end to end.
+Demo video: 2–3-minute video which shows a screen recording on how your team made use of Antigravity solutions 
+Antigravity trace/logs: Workplan, task plan, agent observations, reasoning, decisions, tool calls, action execution, error recovery, and final outcomes.
+README/documentation: Architecture, data schemas, tools/APIs, Antigravity role, setup steps, assumptions, privacy note, cost/latency, scalability, baseline comparison, and limitations.
+Baseline comparison: Show how agentic system performs better than simple heuristic or non-agentic implementation.
+Robustness evidence: At least one failure, edge case, contradiction, missing data, or fallback scenario demonstrated.
+Cost and scalability note: Cost per operation or API call estimate; 10x/100x scaling discussion; latency or throughput estimate.
+
+
+
+hallenge 3: Crisis Intelligence & Response Orchestrator (CIRO)
+CHALLENGE OVERVIEW 
+Cities frequently face localized crises such as urban flooding, heatwaves, road blockages, accidents, infrastructure failures, public disorder, disease spikes, and power outages. Signals may exist across social media, traffic maps, weather alerts, citizen complaints, emergency calls, sensors, and field reports, but response systems are often fragmented and reactive. This challenge requires an agentic system that fuses signals, detects emerging crises, predicts severity, allocates resources, coordinates stakeholders, simulates response actions, and recovers from false alarms or missed detections.
+PROBLEM STATEMENT
+Ingest and fuse at least three signal sources, such as social posts, weather, traffic, emergency calls, mock sensors, field reports, and historical data.
+Detect and classify crisis type, location, severity, confidence, affected population, expected duration, and likely evolution.
+Prioritize and allocate constrained response resources across one or more simultaneous crises.
+Simulate coordinated actions such as traffic rerouting, emergency dispatch, hospital preparation, utility escalation, and public alerts.
+Predict outcomes, side effects, and unintended consequences for each response action. Handle false positives, false negatives, and conflicting signals through verification and escalation logic.
+MANDATORY REQUIREMENT: GOOGLE ANTIGRAVITY
+Use Google Antigravity to orchestrate multi-agent crisis detection, signal fusion, severity analysis, resource allocation, stakeholder communication, and action simulation.
+Show Antigravity traces for signal interpretation, confidence scoring, priority ranking, resource trade-offs, action execution, and recovery from false or conflicting signals. 
+External APIs and mock streams are allowed, but Antigravity must coordinate planning and execution.
+ENHANCED SYSTEM REQUIREMENTS
+Multi-signal fusion: Use at least three sources: social media/citizen posts, weather, maps/traffic, emergency call frequency, mock sensors, public transport, or historical vulnerability maps.
+Source credibility and misinformation handling: Score source credibility, geolocation confidence, urgency language, mention velocity, and contradiction level. Flag low-confidence or suspicious signals.
+Crisis classification: Classify type such as flood, heatwave, accident, infrastructure, power outage, protest, or disease cluster; include severity level and confidence score.
+Severity and evolution prediction: Estimate affected radius, population, duration, peak impact time, spread risk, and uncertainty range.
+Resource allocation optimization: Model constrained resources such as ambulances, police units, rescue teams, shelters, generators, water tankers, field teams, or drones. Allocate based on impact, urgency, travel time, and resource availability.
+Multi-crisis coordination: Handle at least two simultaneous incidents and show trade-offs in prioritization and resource assignment.
+Impact simulation: For each action, show before state, response action, expected after state, response time improvement, congestion impact, resource cost, and possible side effects.
+Stakeholder notification: Generate tailored messages for the public, emergency services, hospitals, utility companies, transport authority, and media/command center.
+False positive/negative handling: Simulate a false alarm, early low-confidence signal, or conflicting signals and show verification, escalation, correction, or alert retraction.
+Robustness and degraded mode: Handle API downtime, stale data, missing location, duplicate incidents, and rate limits with fallback sources or manual escalation.
+EXAMPLE SCENARIO
+Input signals: Social posts report flooding in G-10, weather API shows heavy rainfall, traffic API shows congestion spike, and one field report suggests a broken water main instead of flooding. At the same time, a heat emergency is reported in a nearby low-income neighborhood.
+Detection: Classifies G-10 incident as probable urban flooding with confidence score and identifies conflicting water-main hypothesis.
+Prediction: Estimates affected zones, likely duration, congestion spread, and vulnerable population risk.
+Resource allocation: Prioritizes rescue teams and police traffic units for G-10 while assigning medical outreach to heat emergency based on severity and resource constraints.
+Simulation: Reroutes traffic, creates emergency ticket, sends public alert, notifies hospital, updates incident dashboard, and simulates impact on response time and congestion.
+Recovery: If field verification confirms only a water-main burst, system updates classification, retracts public flood alert, and notifies utility provider.
+RECOMMENDED STRESS-TEST SCENARIOS
+Two or more crises occur within 30 minutes and compete for limited emergency resources.
+Social media indicates flooding but official sensor data is unavailable or contradictory.
+An API fails mid-response and the system must use cached or alternate data.
+Public alert causes evacuation congestion, requiring staged alerting or rerouting. False alarm requires correction, apology/retraction, and log update.
+DELIVERABLES
+Working prototype with a mobile app as mandatory and web app/dashboard as optional.
+Demo video of 3-5 minutes showing multi-source input -> crisis detection -> severity prediction -> resource allocation -> simulated response -> impact visualization -> recovery scenario.
+Antigravity agent trace/logs showing signal fusion, confidence scoring, crisis classification, allocation trade-offs, stakeholder messages, action execution, and fallback behavior. 
+README with architecture, data stream schemas, Antigravity usage, APIs/tools, assumptions, privacy/safety note, cost/latency analysis, baseline comparison, scalability discussion, and limitations.
+EVALUATION CRITERIA
+Antigravity integration 20%
+Crisis detection and severity analysis 25%
+Resource optimization and multi-crisis coordination 20%
+Impact simulation and stakeholder coordination 15%
+Robustness, scalability, cost and latency 10%
+Innovation and UX 10%

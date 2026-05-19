@@ -1,0 +1,20 @@
+# CIRO Mobile App - Part 3 Implementation
+
+## Summary of Changes
+Implemented the Crisis Card, Action Card, Stakeholder components, and the new Map, Actions, and Stakeholders screens.
+
+### UI Components
+- **`components/CrisisCard.tsx`**: A responsive card that maps crisis types to distinct visual icons, displaying severity, confidence, and expected duration.
+- **`components/ActionCard.tsx`**: Dynamic card for response actions. Clicking "Simulate Execution" toggles a spring-animated receipt dropping below the card, summarizing impact and state changes.
+- **`components/StakeholderCard.tsx`**: Individual notification preview card supporting a variety of roles, featuring distinct styling and dynamic sent statuses.
+
+### Screens & Layouts
+- **`app/(tabs)/map.tsx`**: Interactive crisis map built with `react-native-maps`. It renders transparent circular overlays for affected areas and dynamic callouts. Directly consumes `resources.json` from the backend mock data to map all rescue/medical teams and shelters. Features an animated "BEFORE" vs "AFTER" route toggle.
+- **`app/(tabs)/actions.tsx`**: Integrated tab view to flip between "C001" and "C002" response queues. Action execution is wired into your `/api/execute` endpoint.
+- **`app/(tabs)/stakeholders.tsx`**: A master notification panel displaying 6 core stakeholders. Allows the user to trigger mass notification and includes specialized conditional logic for a false alarm retraction card.
+
+## Validation Results
+All code matches your specifications. `react-native-maps` and nested scrolling structures were carefully structured to avoid rendering conflicts on mobile devices.
+
+> [!TIP]
+> Ensure the Expo Go app is reloaded so the new `resources.json` import is correctly bundled! Let me know if any mock data paths are unresolved on your machine.

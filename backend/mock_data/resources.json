@@ -1,0 +1,190 @@
+{
+  "last_updated": "2026-05-15T15:00:00Z",
+  "rescue_teams": [
+    {
+      "unit_id": "RT-01",
+      "name": "Rescue Team Alpha",
+      "status": "available",
+      "current_location": "Surjani Rescue Depot",
+      "coordinates": {"lat": 24.9800, "lng": 67.0350},
+      "capacity": 8,
+      "specialization": ["flood_rescue", "swift_water", "building_collapse"],
+      "equipment": ["rubber_boat", "life_jackets", "ropes", "first_aid"],
+      "vehicle": "4WD Rescue Truck",
+      "contact": "+92-21-1122"
+    },
+    {
+      "unit_id": "RT-02",
+      "name": "Rescue Team Bravo",
+      "status": "available",
+      "current_location": "Korangi Rescue Station",
+      "coordinates": {"lat": 24.8270, "lng": 67.1230},
+      "capacity": 8,
+      "specialization": ["industrial_accident", "chemical_hazmat", "fire_rescue"],
+      "equipment": ["hazmat_suits", "breathing_apparatus", "foam_extinguisher", "stretchers"],
+      "vehicle": "Hazmat Response Vehicle",
+      "contact": "+92-21-1122"
+    },
+    {
+      "unit_id": "RT-03",
+      "name": "Rescue Team Charlie",
+      "status": "available",
+      "current_location": "North Karachi Depot",
+      "coordinates": {"lat": 24.9920, "lng": 67.0640},
+      "capacity": 10,
+      "specialization": ["flood_rescue", "medical_evacuation", "crowd_control"],
+      "equipment": ["rubber_boat", "stretchers", "megaphone", "emergency_lights"],
+      "vehicle": "Rescue Bus + Zodiac Boat",
+      "contact": "+92-21-1122"
+    }
+  ],
+  "medical_teams": [
+    {
+      "unit_id": "MT-01",
+      "name": "Medical Team 1 — Abbasi Shaheed",
+      "status": "available",
+      "base_hospital": "Abbasi Shaheed Hospital",
+      "coordinates": {"lat": 24.9101, "lng": 67.0421},
+      "staff": {"doctors": 2, "paramedics": 4, "nurses": 2},
+      "specialization": ["trauma", "burns", "mass_casualty"],
+      "equipment": ["AED", "ventilator", "trauma_kit", "IV_fluids"],
+      "vehicle": "Advanced Life Support Ambulance",
+      "contact": "+92-21-99205279"
+    },
+    {
+      "unit_id": "MT-02",
+      "name": "Medical Team 2 — Jinnah Hospital",
+      "status": "available",
+      "base_hospital": "Jinnah Postgraduate Medical Centre",
+      "coordinates": {"lat": 24.8900, "lng": 67.0650},
+      "staff": {"doctors": 3, "paramedics": 3, "nurses": 3},
+      "specialization": ["heat_stroke", "poisoning", "general_emergency"],
+      "equipment": ["cooling_blankets", "IV_fluids", "oxygen_cylinders", "trauma_kit"],
+      "vehicle": "2x Advanced Life Support Ambulances",
+      "contact": "+92-21-99201300"
+    }
+  ],
+  "police_units": [
+    {
+      "unit_id": "PU-01",
+      "name": "Police Unit — Surjani Station",
+      "status": "available",
+      "station": "Surjani Town Police Station",
+      "coordinates": {"lat": 24.9805, "lng": 67.0360},
+      "personnel": 12,
+      "vehicles": 2,
+      "capabilities": ["crowd_control", "traffic_diversion", "evacuation_support"]
+    },
+    {
+      "unit_id": "PU-02",
+      "name": "Police Unit — North Karachi Station",
+      "status": "available",
+      "station": "North Karachi Police Station",
+      "coordinates": {"lat": 24.9930, "lng": 67.0640},
+      "personnel": 10,
+      "vehicles": 2,
+      "capabilities": ["crowd_control", "evacuation_support"]
+    },
+    {
+      "unit_id": "PU-03",
+      "name": "Police Unit — Korangi Station",
+      "status": "available",
+      "station": "Korangi Police Station",
+      "coordinates": {"lat": 24.8265, "lng": 67.1225},
+      "personnel": 14,
+      "vehicles": 3,
+      "capabilities": ["perimeter_control", "evacuation", "traffic_diversion"]
+    },
+    {
+      "unit_id": "PU-04",
+      "name": "Police Unit — Lyari Station",
+      "status": "available",
+      "station": "Lyari Police Station",
+      "coordinates": {"lat": 24.8575, "lng": 66.9925},
+      "personnel": 16,
+      "vehicles": 3,
+      "capabilities": ["traffic_diversion", "accident_management", "crowd_control"]
+    },
+    {
+      "unit_id": "PU-05",
+      "name": "Police Unit — SITE Station",
+      "status": "available",
+      "station": "SITE Police Station",
+      "coordinates": {"lat": 24.9122, "lng": 67.0052},
+      "personnel": 10,
+      "vehicles": 2,
+      "capabilities": ["industrial_security", "crowd_control", "perimeter"]
+    },
+    {
+      "unit_id": "PU-06",
+      "name": "Traffic Police — Malir Division",
+      "status": "available",
+      "station": "Malir Traffic Police HQ",
+      "coordinates": {"lat": 24.9005, "lng": 67.1795},
+      "personnel": 8,
+      "vehicles": 4,
+      "capabilities": ["traffic_diversion", "accident_management", "route_control"]
+    }
+  ],
+  "water_tankers": [
+    {
+      "unit_id": "WT-01",
+      "name": "KWSB Tanker Alpha",
+      "status": "available",
+      "capacity_liters": 10000,
+      "current_location": "KWSB Depot, Gulshan",
+      "coordinates": {"lat": 24.9220, "lng": 67.0920},
+      "purpose": "potable_water_supply"
+    },
+    {
+      "unit_id": "WT-02",
+      "name": "KWSB Tanker Bravo",
+      "status": "available",
+      "capacity_liters": 10000,
+      "current_location": "KWSB Depot, North Karachi",
+      "coordinates": {"lat": 24.9925, "lng": 67.0635},
+      "purpose": "potable_water_supply"
+    },
+    {
+      "unit_id": "WT-03",
+      "name": "Fire Department Water Tanker",
+      "status": "available",
+      "capacity_liters": 20000,
+      "current_location": "Korangi Fire Station",
+      "coordinates": {"lat": 24.8270, "lng": 67.1228},
+      "purpose": "fire_suppression"
+    }
+  ],
+  "ambulances": [
+    {"unit_id": "AM-01", "hospital": "Aga Khan Hospital", "status": "available", "coordinates": {"lat": 24.8942, "lng": 67.0804}},
+    {"unit_id": "AM-02", "hospital": "Aga Khan Hospital", "status": "available", "coordinates": {"lat": 24.8942, "lng": 67.0804}},
+    {"unit_id": "AM-03", "hospital": "Jinnah Hospital", "status": "available", "coordinates": {"lat": 24.8900, "lng": 67.0650}},
+    {"unit_id": "AM-04", "hospital": "Jinnah Hospital", "status": "available", "coordinates": {"lat": 24.8900, "lng": 67.0650}},
+    {"unit_id": "AM-05", "hospital": "Civil Hospital", "status": "available", "coordinates": {"lat": 24.8697, "lng": 67.0105}},
+    {"unit_id": "AM-06", "hospital": "Civil Hospital", "status": "available", "coordinates": {"lat": 24.8697, "lng": 67.0105}},
+    {"unit_id": "AM-07", "hospital": "Edhi Foundation", "status": "available", "coordinates": {"lat": 24.9101, "lng": 67.0421}},
+    {"unit_id": "AM-08", "hospital": "Edhi Foundation", "status": "available", "coordinates": {"lat": 24.8572, "lng": 66.9922}}
+  ],
+  "emergency_shelters": [
+    {
+      "shelter_id": "SH-01",
+      "name": "Surjani Town Community Center",
+      "location": "Surjani Town Sector 5",
+      "coordinates": {"lat": 24.9755, "lng": 67.0310},
+      "capacity": 500,
+      "current_occupancy": 0,
+      "status": "ready",
+      "facilities": ["beds", "food", "water", "medical_station", "generator"]
+    },
+    {
+      "shelter_id": "SH-02",
+      "name": "North Karachi Government School",
+      "location": "North Karachi Sector 11",
+      "coordinates": {"lat": 24.9910, "lng": 67.0620},
+      "capacity": 800,
+      "current_occupancy": 45,
+      "status": "active",
+      "facilities": ["beds", "water", "fans", "medical_station"]
+    }
+  ]
+}

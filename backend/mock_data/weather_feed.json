@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-05-15T15:00:00Z",
+  "source": "Pakistan Meteorological Department + CIRO Sensors",
+  "zones": {
+    "surjani_town": {
+      "zone_name": "Surjani Town",
+      "coordinates": {"lat": 24.9801, "lng": 67.0359},
+      "rainfall_mm": 45,
+      "temperature_c": 35,
+      "wind_kmh": 14,
+      "humidity_pct": 88,
+      "alert_level": "red",
+      "uv_index": 6,
+      "visibility_km": 3.2,
+      "conditions": "Heavy rain, waterlogging risk",
+      "forecast_3h": "Continued heavy rainfall, 20-30mm expected",
+      "flood_risk": "high"
+    },
+    "north_karachi": {
+      "zone_name": "North Karachi",
+      "coordinates": {"lat": 24.9924, "lng": 67.0637},
+      "rainfall_mm": 0,
+      "temperature_c": 43,
+      "wind_kmh": 8,
+      "humidity_pct": 30,
+      "alert_level": "orange",
+      "uv_index": 10,
+      "visibility_km": 8.0,
+      "conditions": "Extreme heat, dry conditions",
+      "forecast_3h": "Temperature to reach 45C, heat stroke risk high",
+      "flood_risk": "low"
+    },
+    "korangi": {
+      "zone_name": "Korangi Industrial Area",
+      "coordinates": {"lat": 24.8269, "lng": 67.1228},
+      "rainfall_mm": 0,
+      "temperature_c": 38,
+      "wind_kmh": 22,
+      "humidity_pct": 48,
+      "alert_level": "orange",
+      "uv_index": 9,
+      "visibility_km": 5.5,
+      "conditions": "High winds, elevated fire hazard",
+      "forecast_3h": "Winds increasing to 28 km/h, humidity dropping",
+      "flood_risk": "low"
+    },
+    "lyari": {
+      "zone_name": "Lyari",
+      "coordinates": {"lat": 24.8572, "lng": 66.9922},
+      "rainfall_mm": 2,
+      "temperature_c": 37,
+      "wind_kmh": 16,
+      "humidity_pct": 60,
+      "alert_level": "yellow",
+      "uv_index": 7,
+      "visibility_km": 7.0,
+      "conditions": "Light drizzle, moderate humidity",
+      "forecast_3h": "Rain clearing within 1 hour",
+      "flood_risk": "medium"
+    },
+    "site_area": {
+      "zone_name": "SITE Industrial Area",
+      "coordinates": {"lat": 24.9120, "lng": 67.0050},
+      "rainfall_mm": 0,
+      "temperature_c": 41,
+      "wind_kmh": 12,
+      "humidity_pct": 38,
+      "alert_level": "yellow",
+      "uv_index": 9,
+      "visibility_km": 9.0,
+      "conditions": "Hot and dry, industrial pollution haze",
+      "forecast_3h": "Temperature steady at 40-42C through evening",
+      "flood_risk": "low"
+    }
+  }
+}

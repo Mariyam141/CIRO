@@ -1,0 +1,41 @@
+# CIRO Mobile App - Part 3 Implementation Plan
+
+This plan outlines the creation of the CIRO mobile app's Part 3 frontend files based on the updated `agent_prompt.md`. We will create the UI components for crises, actions, and stakeholders, along with the main screens for Map, Actions, and Stakeholders.
+
+## User Review Required
+
+> [!WARNING]
+> To display the resources on the map, we will directly import `resources.json` from `backend/mock_data/resources.json` into the Expo app. Please verify if you'd prefer reading this through an API endpoint instead. 
+
+## Proposed Changes
+
+### UI Components
+#### [NEW] [CrisisCard.tsx](file:///c:/Users/Addministrator/ciro/components/CrisisCard.tsx)
+A card component to display detailed crisis information, including severity badges and progress bars for confidence.
+
+#### [NEW] [ActionCard.tsx](file:///c:/Users/Addministrator/ciro/components/ActionCard.tsx)
+A component representing a simulated action, with a "Simulate Execution" button that triggers a slide-up receipt after execution.
+
+#### [NEW] [StakeholderCard.tsx](file:///c:/Users/Addministrator/ciro/components/StakeholderCard.tsx)
+A component to display a stakeholder notification with an option to send it, tracking the sent state. Also, adding `Stakeholder` type to `store/crisisStore.ts` or directly inside the file since the prompt specifies the type definition under `StakeholderCard.tsx`.
+
+---
+### App Screens & Layouts
+#### [NEW] [map.tsx](file:///c:/Users/Addministrator/ciro/app/(tabs)/map.tsx)
+The full-screen interactive Map using `react-native-maps`. It will show active crises with colored circular overlays, markers, and callouts, as well as render resource markers for rescue teams, medical teams, and shelters. We will implement the animated "BEFORE" and "AFTER" states.
+
+#### [NEW] [actions.tsx](file:///c:/Users/Addministrator/ciro/app/(tabs)/actions.tsx)
+The screen to execute specific response actions. It will have tabs for different crises, showing respective `ActionCard`s. It will hit the `/api/execute` endpoint and display execution receipts.
+
+#### [NEW] [stakeholders.tsx](file:///c:/Users/Addministrator/ciro/app/(tabs)/stakeholders.tsx)
+The screen for sending coordinated messages to stakeholders like the public, hospitals, emergency services, utilities, etc.
+
+## Verification Plan
+
+### Automated Tests
+- Type checking with `tsc` to verify no TypeScript compilation errors exist.
+
+### Manual Verification
+- Review the rendering of all 3 new screens in the Expo Go app. 
+- Ensure Map markers, overlays, and animations work.
+- Test the Simulate Execution flow in the Actions screen.
