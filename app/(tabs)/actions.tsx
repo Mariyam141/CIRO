@@ -86,18 +86,19 @@ function fallbackActions(crisis: Crisis) {
 }
 
 // ─── ActionCard ────────────────────────────────────────────────────
-function ActionCard({ action, executed, onExecute, execResult }: {
+function ActionCard({ action, executed, onExecute, execResult, isAdmin }: {
   action: any;
   executed: boolean;
   onExecute: () => void;
   execResult?: any;
+  isAdmin: boolean;
 }) {
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const icon = TYPE_ICON[action.type] ?? 'flash';
 
   const handleTap = async () => {
-    if (executed || loading) return;
+    if (executed || loading || !isAdmin) return;
     setLoading(true);
     await onExecute();
     setLoading(false);
@@ -141,12 +142,19 @@ function ActionCard({ action, executed, onExecute, execResult }: {
       )}
 
       {!executed ? (
-        <TouchableOpacity style={ac.execBtn} onPress={handleTap} disabled={loading}>
-          {loading
-            ? <ActivityIndicator size="small" color={Colors.accentRed} />
-            : <><Ionicons name="play-circle" size={14} color={Colors.accentRed} /><Text style={ac.execBtnText}>Simulate Execution</Text></>
-          }
-        </TouchableOpacity>
+        isAdmin ? (
+          <TouchableOpacity style={ac.execBtn} onPress={handleTap} disabled={loading}>
+            {loading
+              ? <ActivityIndicator size="small" color={Colors.accentRed} />
+              : <><Ionicons name="play-circle" size={14} color={Colors.accentRed} /><Text style={ac.execBtnText}>Simulate Execution</Text></>
+            }
+          </TouchableOpacity>
+        ) : (
+          <View style={ac.viewOnlyRow}>
+            <Ionicons name="eye-outline" size={13} color={Colors.textMuted} />
+            <Text style={ac.viewOnlyText}>View only</Text>
+          </View>
+        )
       ) : (
         <View style={ac.doneRow}>
           <Ionicons name="checkmark-circle" size={14} color={Colors.accentGreen} />
@@ -159,6 +167,8 @@ function ActionCard({ action, executed, onExecute, execResult }: {
 
 // ─── Main Screen ───────────────────────────────────────────────────
 export default function ActionsScreen() {
+  const currentUser     = useCrisisStore(s => s.currentUser);
+  const isAdmin         = currentUser?.role === 'admin';
   const activeCrises    = useCrisisStore(s => s.activeCrises);
   const allocationOutput = useCrisisStore(s => s.allocationOutput);
   const executionOutput  = useCrisisStore(s => s.executionOutput);
@@ -277,6 +287,7 @@ export default function ActionsScreen() {
             executed={executedActions.includes(action.id)}
             onExecute={() => handleExecute(action)}
             execResult={executedActions.includes(action.id) ? executionOutput?.data : undefined}
+            isAdmin={isAdmin}
           />
         ))}
       </ScrollView>
@@ -353,4 +364,6 @@ const ac = StyleSheet.create({
   resultLabel: { color: Colors.textMuted, fontSize: 9, fontWeight: 'bold', letterSpacing: 0.5, marginBottom: 2 },
   resultText:  { color: Colors.textPrimary, fontSize: 11, lineHeight: 16, marginBottom: 6 },
   cost:        { color: Colors.accentAmber, fontSize: 11, fontWeight: 'bold' },
+  viewOnlyRow: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  viewOnlyText: { color: Colors.textMuted, fontSize: 11 },
 });

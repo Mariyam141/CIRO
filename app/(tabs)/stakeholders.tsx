@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   ActivityIndicator,
@@ -89,9 +89,11 @@ function buildFallbackAlerts(
 function StakeholderCard({
   item,
   onSend,
+  isAdmin,
 }: {
   item: Stakeholder;
   onSend: () => void;
+  isAdmin: boolean;
 }) {
   const cfg = TYPE_CONFIG[item.type];
   return (
@@ -109,7 +111,12 @@ function StakeholderCard({
       <Text style={sc.name}>{item.name}</Text>
       <Text style={sc.message}>{item.message}</Text>
 
-      {item.sent ? (
+      {!isAdmin ? (
+        <View style={sc.readOnlyRow}>
+          <Ionicons name="eye-outline" size={12} color={Colors.textMuted} />
+          <Text style={sc.readOnlyText}>Notification received</Text>
+        </View>
+      ) : item.sent ? (
         <View style={sc.sentRow}>
           <Ionicons name="checkmark-circle" size={14} color={Colors.accentGreen} />
           <Text style={sc.sentText}>Alert Sent</Text>
@@ -132,6 +139,8 @@ export default function StakeholdersScreen() {
   const falseAlarm         = useCrisisStore(s => s.falseAlarmDetected);
   const agentStates        = useCrisisStore(s => s.agentStates);
   const agentsDone         = Object.values(agentStates).filter(v => v === 'done').length;
+  const currentUser        = useCrisisStore(s => s.currentUser);
+  const isAdmin            = currentUser?.role === 'admin';
 
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>([]);
   const [loading, setLoading]           = useState(false);
@@ -140,6 +149,14 @@ export default function StakeholdersScreen() {
   const [aiMode, setAiMode]             = useState(false);
 
   const hasCrises = activeCrises.length > 0;
+
+  // Users see template notifications automatically — no generate button needed
+  useEffect(() => {
+    if (!isAdmin && !generated && activeCrises.length > 0) {
+      setStakeholders(buildFallbackAlerts(activeCrises, verificationOutput, falseAlarm));
+      setGenerated(true);
+    }
+  }, [isAdmin, generated, activeCrises.length]);
 
   const generateAlerts = useCallback(async (useAI: boolean) => {
     setLoading(true);
@@ -200,7 +217,7 @@ export default function StakeholdersScreen() {
         <Text style={styles.subtitle}>
           {hasCrises
             ? `${activeCrises.length} active crisis${activeCrises.length > 1 ? 'es' : ''} — ${activeCrises.reduce((s, c) => s + (c.affected_population ?? 0), 0).toLocaleString()} persons affected`
-            : 'Run a crisis analysis to generate alerts'}
+            : isAdmin ? 'Run a crisis analysis to generate alerts' : 'Awaiting crisis data...'}
         </Text>
 
         {/* Agent progress indicator */}
@@ -217,36 +234,41 @@ export default function StakeholdersScreen() {
 
       <ScrollView style={styles.content} bounces={false} contentContainerStyle={styles.scrollContent}>
 
-        {/* Generate buttons */}
         {!generated ? (
-          <View style={styles.generateSection}>
-            <Text style={styles.generateTitle}>Ready to broadcast crisis alerts?</Text>
-            <Text style={styles.generateDesc}>
-              CIRO will generate stakeholder notifications tailored to the detected crises across 6 channels: public, hospital, emergency services, utilities, transport, and media.
-            </Text>
-            <TouchableOpacity
-              style={[styles.aiBtn, loading && { opacity: 0.6 }]}
-              onPress={() => generateAlerts(true)}
-              disabled={loading}
-            >
-              {loading && aiMode ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Ionicons name="sparkles" size={16} color="#fff" />
-              )}
-              <Text style={styles.aiBtnText}>
-                {loading && aiMode ? 'Generating...' : 'Generate AI Alerts'}
+          isAdmin ? (
+            <View style={styles.generateSection}>
+              <Text style={styles.generateTitle}>Ready to broadcast crisis alerts?</Text>
+              <Text style={styles.generateDesc}>
+                CIRO will generate stakeholder notifications tailored to the detected crises across 6 channels: public, hospital, emergency services, utilities, transport, and media.
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.templateBtn, loading && { opacity: 0.6 }]}
-              onPress={() => generateAlerts(false)}
-              disabled={loading}
-            >
-              <Ionicons name="document-text" size={14} color={Colors.textMuted} />
-              <Text style={styles.templateBtnText}>Use Template Alerts</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                style={[styles.aiBtn, loading && { opacity: 0.5 }]}
+                onPress={() => generateAlerts(true)}
+                disabled={loading}
+              >
+                {loading && aiMode
+                  ? <ActivityIndicator size="small" color="#fff" />
+                  : <Ionicons name="sparkles" size={16} color="#fff" />
+                }
+                <Text style={styles.aiBtnText}>
+                  {loading && aiMode ? 'Generating...' : 'Generate AI Alerts'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.templateBtn, loading && { opacity: 0.6 }]}
+                onPress={() => generateAlerts(false)}
+                disabled={loading}
+              >
+                <Ionicons name="document-text" size={14} color={Colors.textMuted} />
+                <Text style={styles.templateBtnText}>Use Template Alerts</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.officerWaiting}>
+              <ActivityIndicator size="small" color={Colors.accentBlue} style={{ marginBottom: 8 }} />
+              <Text style={styles.officerWaitingText}>Loading notifications...</Text>
+            </View>
+          )
         ) : (
           <>
             {/* Status row */}
@@ -257,13 +279,17 @@ export default function StakeholdersScreen() {
                   {aiMode ? 'AI-Generated' : 'Template'}
                 </Text>
               </View>
-              <TouchableOpacity onPress={handleSendAll} style={styles.sendAllBtn}>
-                <Ionicons name="send" size={12} color={Colors.accentRed} />
-                <Text style={styles.sendAllText}>Send All</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => { setGenerated(false); setStakeholders([]); setRetractionSent(false); }} style={styles.resetBtn}>
-                <Ionicons name="refresh" size={12} color={Colors.textMuted} />
-              </TouchableOpacity>
+              {isAdmin && (
+                <>
+                  <TouchableOpacity onPress={handleSendAll} style={styles.sendAllBtn}>
+                    <Ionicons name="send" size={12} color={Colors.accentRed} />
+                    <Text style={styles.sendAllText}>Send All</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => { setGenerated(false); setStakeholders([]); setRetractionSent(false); }} style={styles.resetBtn}>
+                    <Ionicons name="refresh" size={12} color={Colors.textMuted} />
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
 
             {/* False alarm retraction card */}
@@ -290,7 +316,7 @@ export default function StakeholdersScreen() {
             )}
 
             {stakeholders.map(item => (
-              <StakeholderCard key={item.id} item={item} onSend={() => handleSend(item.id)} />
+              <StakeholderCard key={item.id} item={item} onSend={() => handleSend(item.id)} isAdmin={isAdmin} />
             ))}
           </>
         )}
@@ -332,6 +358,8 @@ const styles = StyleSheet.create({
   retractionBtnText: { color: '#000', fontWeight: 'bold', fontSize: 11 },
   retractionSentRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   retractionSentText: { color: Colors.accentAmber, fontWeight: 'bold', fontSize: 11 },
+  officerWaiting:     { alignItems: 'center', paddingVertical: 40 },
+  officerWaitingText: { color: Colors.textMuted, fontSize: 13 },
 });
 
 const sc = StyleSheet.create({
@@ -346,6 +374,8 @@ const sc = StyleSheet.create({
   message:    { color: Colors.textMuted, fontSize: 12, lineHeight: 18, marginBottom: 12 },
   sentRow:    { flexDirection: 'row', alignItems: 'center', gap: 4 },
   sentText:   { color: Colors.accentGreen, fontSize: 11, fontWeight: 'bold' },
-  sendBtn:    { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, borderWidth: 1, alignSelf: 'flex-start' },
-  sendBtnText: { fontSize: 11, fontWeight: 'bold' },
+  sendBtn:      { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 8, borderWidth: 1, alignSelf: 'flex-start' },
+  sendBtnText:  { fontSize: 11, fontWeight: 'bold' },
+  readOnlyRow:  { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  readOnlyText: { color: Colors.textMuted, fontSize: 11, fontStyle: 'italic' },
 });

@@ -61,8 +61,12 @@ export default function HomeScreen() {
     setFalseAlarm,
     markActionExecuted,
     isDegradedMode,
-    setDegradedMode
+    setDegradedMode,
+    currentUser,
+    logout,
   } = useCrisisStore();
+
+  const isAdmin = currentUser?.role === 'admin';
 
   const [time, setTime] = useState(new Date());
   const [submitting, setSubmitting] = useState(false);
@@ -161,7 +165,7 @@ export default function HomeScreen() {
       }
 
       const fallbackSocial = [
-        { text: "Surjani mein pani bhar gaya, gaariyan phans gayi hain", credibility: "citizen", source_type: "citizen" },
+        { text: "Surjani mein pani bhar gaya, gaariyan phans gayi hain", credibility: 65, source_type: "citizen" },
         { text: "ALERT: Surjani Town sector 11/C completely waterlogged. Residents urged to stay indoors.", credibility: 88, source_type: "verified" },
         { text: "Breaking: 45mm rainfall in Surjani Town in 2 hours. Roads flooded, rescue teams dispatched.", credibility: 92, source_type: "news_outlet" },
         { text: "North Karachi mein garmi bohat zyada hai, 3 log behosh ho gaye", credibility: 60, source_type: "citizen" },
@@ -471,10 +475,18 @@ export default function HomeScreen() {
       appendAgentLog("verification", "Original flood classification confidence dropping from 89% to 22%...");
       appendAgentLog("verification", "Threshold crossed — initiating false alarm protocol...");
 
+      const scenarioFieldSignal = scenario?.social_signals?.find(
+        (s: any) => s?.source_type === 'field_team'
+      ) ?? scenario?.social_signals?.[0];
+
       const verifyPayload = {
         original_crisis: { crisis_id: 'C001', type: 'urban_flooding', location: 'G-10', confidence: 89 },
-        new_signal: scenario
-          ? scenario
+        new_signal: scenarioFieldSignal
+          ? {
+              text: scenarioFieldSignal.text ?? 'Field verification report received.',
+              credibility: scenarioFieldSignal.credibility ?? 95,
+              source_type: scenarioFieldSignal.source_type ?? 'field_team',
+            }
           : { text: 'Field team on ground: water main burst only. No flooding accumulation. Dry road surface 50m away.', credibility: 95, source_type: 'field_team' },
       };
 
@@ -537,13 +549,24 @@ export default function HomeScreen() {
         {/* Header */}
         <View style={styles.header}>
           <View>
-            <Text style={styles.logo}>CIRO</Text>
+            <Text style={styles.logo}>Muhafiz</Text>
             <Text style={styles.subtitle}>Crisis Intelligence & Response Orchestrator</Text>
             <Text style={styles.city}>Karachi, Pakistan</Text>
           </View>
           <View style={styles.headerRight}>
             <Text style={styles.clock}>{time.toLocaleTimeString()}</Text>
             <View style={[styles.statusDot, { backgroundColor: isDemoRunning ? Colors.accentRed : Colors.accentGreen }]} />
+            {/* User badge + logout */}
+            <View style={styles.userRow}>
+              <View style={[styles.roleBadge, { borderColor: isAdmin ? Colors.accentRed : Colors.accentBlue }]}>
+                <Text style={[styles.roleText, { color: isAdmin ? Colors.accentRed : Colors.accentBlue }]}>
+                  {isAdmin ? 'ADMIN' : 'USER'}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
+                <Ionicons name="log-out-outline" size={16} color={Colors.textMuted} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -577,6 +600,9 @@ export default function HomeScreen() {
             multiline
             editable={!isDemoRunning}
           />
+          {!isAdmin && (
+            <Text style={styles.fieldReportHint}>Field officer mode — submit your report above to run the AI pipeline</Text>
+          )}
           <View style={styles.inputFooter}>
             <Text style={styles.inputHint}>Roman Urdu / English / Urdu — AI detects crisis type automatically</Text>
             <Text style={[styles.charCount, inputText.length > 200 && { color: Colors.accentAmber }]}>{inputText.length}</Text>
@@ -596,9 +622,15 @@ export default function HomeScreen() {
         {/* Quick Reports */}
         <View style={styles.grid}>
           {quickCategories.map((item, idx) => (
-            <TouchableOpacity key={idx} style={[styles.gridItem, isDemoRunning && { opacity: 0.5 }]} disabled={isDemoRunning} onPress={() => { router.push('/(tabs)/agents'); runDemoSequence(`${item.emoji} ${item.label} incident reported in Karachi`); }}>
+            <TouchableOpacity
+              key={idx}
+              style={[styles.gridItem, (isDemoRunning || !isAdmin) && { opacity: 0.5 }]}
+              disabled={isDemoRunning || !isAdmin}
+              onPress={() => { router.push('/(tabs)/agents'); runDemoSequence(`${item.emoji} ${item.label} incident reported in Karachi`); }}
+            >
               <Text style={styles.gridEmoji}>{item.emoji}</Text>
               <Text style={styles.gridLabel}>{item.label}</Text>
+              {!isAdmin && <Text style={styles.adminOnlyLabel}>Admin</Text>}
             </TouchableOpacity>
           ))}
         </View>
@@ -656,11 +688,19 @@ export default function HomeScreen() {
 
         {/* Actions */}
         <View style={styles.actionSection}>
-          <Text style={styles.actionLabel}>DEMO SCENARIOS</Text>
+          <View style={styles.actionLabelRow}>
+            <Text style={styles.actionLabel}>DEMO SCENARIOS</Text>
+            {!isAdmin && (
+              <View style={styles.adminOnlyBadge}>
+                <Ionicons name="lock-closed" size={10} color={Colors.accentAmber} />
+                <Text style={styles.adminOnlyBadgeText}>Admin Only</Text>
+              </View>
+            )}
+          </View>
           <TouchableOpacity
-            style={[styles.demoButton, isDemoRunning && { opacity: 0.6 }]}
+            style={[styles.demoButton, (isDemoRunning || !isAdmin) && { opacity: 0.5 }]}
             onPress={() => runDemoSequence()}
-            disabled={isDemoRunning}
+            disabled={isDemoRunning || !isAdmin}
           >
             {isDemoRunning
               ? <View style={styles.submitRow}><ActivityIndicator color="#fff" size="small" /><Text style={[styles.demoButtonText, { marginLeft: 10 }]}>Agents Running...</Text></View>
@@ -671,9 +711,9 @@ export default function HomeScreen() {
             }
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.falseAlarmButton, isDemoRunning && { opacity: 0.5 }]}
+            style={[styles.falseAlarmButton, (isDemoRunning || !isAdmin) && { opacity: 0.5 }]}
             onPress={runFalseAlarmDemo}
-            disabled={isDemoRunning}
+            disabled={isDemoRunning || !isAdmin}
           >
             <Text style={styles.falseAlarmText}>Test False Alarm Scenario</Text>
             <Text style={styles.falseAlarmSub}>Watch Verification Agent detect & retract</Text>
@@ -731,7 +771,7 @@ const styles = StyleSheet.create({
   signalText: { color: Colors.textPrimary, flex: 1, marginLeft: 12, fontSize: 14 },
   signalTime: { color: Colors.textMuted, fontSize: 10, marginLeft: 8 },
   actionSection: { marginTop: 4 },
-  actionLabel: { color: Colors.textMuted, fontSize: 10, fontWeight: 'bold', letterSpacing: 1, marginBottom: 10 },
+  actionLabel: { color: Colors.textMuted, fontSize: 10, fontWeight: 'bold', letterSpacing: 1 },
   demoButton: { backgroundColor: Colors.accentRed, padding: 16, borderRadius: 14, alignItems: 'center', marginBottom: 12 },
   demoButtonText: { color: '#fff', fontSize: 17, fontWeight: 'bold' },
   demoSubtext: { color: 'rgba(255,255,255,0.7)', fontSize: 11, marginTop: 4 },
@@ -740,4 +780,13 @@ const styles = StyleSheet.create({
   falseAlarmSub: { color: 'rgba(245,158,11,0.7)', fontSize: 11, marginTop: 3 },
   degradedBanner: { backgroundColor: Colors.accentAmber, padding: 10, alignItems: 'center', marginTop: 30 },
   degradedText: { color: '#000', fontWeight: 'bold', fontSize: 11 },
+  userRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 6 },
+  roleBadge: { borderWidth: 1, borderRadius: 6, paddingHorizontal: 7, paddingVertical: 2 },
+  roleText: { fontSize: 9, fontWeight: 'bold', letterSpacing: 0.5 },
+  logoutBtn: { padding: 2 },
+  actionLabelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },
+  adminOnlyBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: Colors.accentAmber + '22', borderWidth: 1, borderColor: Colors.accentAmber, borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 },
+  adminOnlyBadgeText: { color: Colors.accentAmber, fontSize: 9, fontWeight: 'bold' },
+  adminOnlyLabel: { color: Colors.accentAmber, fontSize: 8, fontWeight: 'bold', marginTop: 2 },
+  fieldReportHint: { color: Colors.accentBlue, fontSize: 11, marginBottom: 8, fontStyle: 'italic' },
 });

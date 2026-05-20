@@ -3,6 +3,7 @@ import json
 import os
 from groq import Groq
 from dotenv import load_dotenv
+from agents.runtime_config import get_model_name
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
@@ -40,11 +41,21 @@ def extract_json(text: str) -> dict:
     raise ValueError(f"No valid JSON found in LLM response (first 500 chars): {text[:500]}")
 
 
-def call_llm(system_prompt: str, user_message: str,
-             temperature: float = 0.3, max_tokens: int = 2800) -> tuple[dict, int]:
+def call_llm(
+    system_prompt: str,
+    user_message: str,
+    temperature: float = 0.3,
+    max_tokens: int = 2800,
+    agent_key: str | None = None,
+) -> tuple[dict, int]:
     """Call Groq LLM with robust JSON extraction.  Retries once with stricter instruction."""
-    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("GROQ_API_KEY is not set")
+
+    client = Groq(api_key=api_key)
     last_error: Exception | None = None
+    model_name = get_model_name(agent_key)
 
     for attempt in range(2):
         if attempt == 0:
@@ -59,7 +70,7 @@ def call_llm(system_prompt: str, user_message: str,
             usr = user_message + "\n\nReturn raw JSON only — no markdown, no prose."
 
         response = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model=model_name,
             messages=[
                 {"role": "system", "content": sys},
                 {"role": "user",   "content": usr},

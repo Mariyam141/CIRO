@@ -2,6 +2,19 @@ import { create } from 'zustand';
 
 export type AgentState = "idle" | "thinking" | "done" | "error";
 
+export type UserRole = "admin" | "user";
+
+export type CurrentUser = {
+  role: UserRole;
+  name: string;
+  email: string;
+};
+
+const CREDENTIALS: Record<string, { password: string; user: CurrentUser }> = {
+  "admin@ciro.pk": { password: "admin123", user: { role: "admin", name: "Admin", email: "admin@ciro.pk" } },
+  "user@ciro.pk":  { password: "user123",  user: { role: "user",  name: "User",  email: "user@ciro.pk"  } },
+};
+
 export type Crisis = {
   crisis_id: string;
   type: string;
@@ -85,6 +98,11 @@ interface CrisisStore {
   isDegradedMode: boolean;
   setDegradedMode: (val: boolean) => void;
 
+  // Auth
+  currentUser: CurrentUser | null;
+  login: (email: string, password: string) => boolean;
+  logout: () => void;
+
   // Reset everything
   resetAll: () => void;
 }
@@ -96,6 +114,24 @@ const initialAgentStates = {
   execution: "idle" as AgentState,
   verification: "idle" as AgentState,
 };
+
+const buildOperationalResetState = () => ({
+  inputText: "",
+  agentStates: { ...initialAgentStates },
+  fusionOutput: null,
+  detectionOutput: null,
+  allocationOutput: null,
+  executionOutput: null,
+  verificationOutput: null,
+  agentLogs: {},
+  activeCrises: [],
+  actions: [],
+  executedActions: [],
+  executionLogs: [],
+  isDemoRunning: false,
+  falseAlarmDetected: false,
+  isDegradedMode: false,
+});
 
 export const useCrisisStore = create<CrisisStore>((set, get) => ({
   inputText: "",
@@ -140,7 +176,9 @@ export const useCrisisStore = create<CrisisStore>((set, get) => ({
   setActions: (actions) => set({ actions }),
   executedActions: [],
   markActionExecuted: (id) => set((prev) => ({
-    executedActions: [...prev.executedActions, id]
+    executedActions: prev.executedActions.includes(id)
+      ? prev.executedActions
+      : [...prev.executedActions, id]
   })),
 
   executionLogs: [],
@@ -158,21 +196,27 @@ export const useCrisisStore = create<CrisisStore>((set, get) => ({
   isDegradedMode: false,
   setDegradedMode: (val) => set({ isDegradedMode: val }),
 
-  resetAll: () => set({
-    inputText: "",
-    agentStates: { ...initialAgentStates },
-    fusionOutput: null,
-    detectionOutput: null,
-    allocationOutput: null,
-    executionOutput: null,
-    verificationOutput: null,
-    agentLogs: {},
-    activeCrises: [],
-    actions: [],
-    executedActions: [],
-    executionLogs: [],
-    isDemoRunning: false,
-    falseAlarmDetected: false,
-    isDegradedMode: false,
+  currentUser: null,
+  login: (email, password) => {
+    const entry = CREDENTIALS[email.toLowerCase().trim()];
+    if (entry && entry.password === password) {
+      const update: Partial<CrisisStore> = { currentUser: entry.user };
+      if (entry.user.role === 'user') {
+        // Pre-seed live situation for field officer on login
+        (update as any).activeCrises = [
+          { crisis_id: 'C001', type: 'urban_flooding',  location: 'Surjani Town',   coordinates: { lat: 24.9801, lng: 67.0359 }, severity: 'critical', confidence: 91, affected_population: 45000,  expected_duration_hours: 4 },
+          { crisis_id: 'C002', type: 'heatwave',        location: 'North Karachi',  coordinates: { lat: 24.9924, lng: 67.0637 }, severity: 'high',     confidence: 84, affected_population: 120000, expected_duration_hours: 8 },
+        ];
+      }
+      set(update as any);
+      return true;
+    }
+    return false;
+  },
+  logout: () => set({
+    ...buildOperationalResetState(),
+    currentUser: null,
   }),
+
+  resetAll: () => set(buildOperationalResetState()),
 }));

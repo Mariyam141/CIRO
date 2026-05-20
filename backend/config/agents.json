@@ -1,0 +1,11 @@
+{
+  "default_model": "llama-3.3-70b-versatile",
+  "agents": {
+    "signal_fusion": {},
+    "crisis_detection": {},
+    "resource_allocation": {},
+    "action_execution": {},
+    "verification": {},
+    "stakeholders": {}
+  }
+}

@@ -1,6 +1,7 @@
-# CIRO — Crisis Intelligence & Response Orchestrator
+# Muhafiz (formerly CIRO) — Crisis Intelligence & Response Orchestrator
 
 > **Google Antigravity Hackathon — Challenge 3**  
+> Built by **Team CodeBlitz**  
 > Real-time AI-powered crisis detection and coordinated emergency response for Karachi, Pakistan.
 
 ---
@@ -87,7 +88,7 @@ All agents use **Groq `llama-3.3-70b-versatile`** with:
 - React Native 0.81.5 + Expo SDK 54
 - expo-router (file-based navigation)
 - Zustand (global state)
-- react-native-maps (Karachi map)
+- react-native-maps (Karachi map powered by Google Maps API)
 - axios (HTTP client)
 
 ---
@@ -136,6 +137,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 ```bash
 npm install
 # Edit constants/config.ts → set BASE_URL to your backend URL
+# Ensure Google Maps API key is configured in app.json for Android map rendering
 npx expo start
 ```
 
@@ -185,7 +187,27 @@ eas build --platform android --profile preview
 
 ---
 
-## Team
+## Team CodeBlitz
 
 **Mariyam** — Full-stack development, AI agent design, mobile UI  
 **Omaima** — Documentation, video production, demo coordination
+
+## Agent Runtime Configuration
+
+You can now configure agent runtime behavior without changing Python code.
+
+- Global model override: set `GROQ_MODEL` in `backend/.env`
+- Per-agent model override: set env vars like `CIRO_SIGNAL_FUSION_MODEL`
+- Global config file (default): `backend/config/agents.json`
+- Optional config path override: set `CIRO_AGENT_CONFIG_PATH`
+- System prompt override (per agent):
+  - Inline env var: `CIRO_<AGENT_KEY>_SYSTEM_PROMPT`
+  - File path env var: `CIRO_<AGENT_KEY>_SYSTEM_PROMPT_PATH`
+
+Supported `AGENT_KEY` values:
+- `signal_fusion`
+- `crisis_detection`
+- `resource_allocation`
+- `action_execution`
+- `verification`
+- `stakeholders`

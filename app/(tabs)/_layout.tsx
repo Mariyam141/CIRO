@@ -1,8 +1,12 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/colors';
+import { useCrisisStore } from '../../store/crisisStore';
 
 export default function TabLayout() {
+  const role = useCrisisStore(s => s.currentUser?.role);
+  const isAdmin = role === 'admin';
+
   return (
     <Tabs
       screenOptions={{
@@ -27,6 +31,7 @@ export default function TabLayout() {
         options={{
           title: 'Agents',
           tabBarIcon: ({ color, size }) => <Ionicons name="hardware-chip" size={size} color={color} />,
+          href: isAdmin ? '/agents' : null,
         }}
       />
       {/* Map, Actions, Alerts, Logs placeholders per spec */}
@@ -42,6 +47,7 @@ export default function TabLayout() {
         options={{
           title: 'Actions',
           tabBarIcon: ({ color, size }) => <Ionicons name="flash" size={size} color={color} />,
+          href: isAdmin ? '/actions' : null,
         }}
       />
       <Tabs.Screen
@@ -56,6 +62,7 @@ export default function TabLayout() {
         options={{
           title: 'Logs',
           tabBarIcon: ({ color, size }) => <Ionicons name="document-text" size={size} color={color} />,
+          href: isAdmin ? '/logs' : null,
         }}
       />
     </Tabs>

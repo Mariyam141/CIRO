@@ -16,10 +16,11 @@ from agents.crisis_detection import detect_crises
 from agents.resource_allocation import allocate_resources
 from agents.action_execution import execute_action
 from agents.verification import verify_crisis
+from agents.runtime_config import get_agent_system_prompt
 from agents.utils import call_llm
 
 app = FastAPI(
-    title="CIRO — Crisis Intelligence & Response Orchestrator",
+    title="CIRO â€” Crisis Intelligence & Response Orchestrator",
     description="AI-powered crisis management backend for Karachi, Pakistan",
     version="1.0.0"
 )
@@ -35,7 +36,7 @@ app.add_middleware(
 # Global execution log store
 execution_logs = []
 
-# ─── Mock data paths ───────────────────────────────────────────────
+# â”€â”€â”€ Mock data paths â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 BASE_DIR = os.path.dirname(__file__)
 MOCK_DIR = os.path.join(BASE_DIR, "mock_data")
 
@@ -59,7 +60,7 @@ def append_log(endpoint: str, response: dict):
         "tokens_used": response["tokens_used"]
     })
 
-# ─── Request models ────────────────────────────────────────────────
+# â”€â”€â”€ Request models â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class FuseRequest(BaseModel):
     social_signals: list = []
@@ -92,11 +93,11 @@ class StakeholderRequest(BaseModel):
     verification_result: str = "confirmed"
     retraction_message: Optional[str] = None
 
-# ─── Endpoints ────────────────────────────────────────────────────
+# â”€â”€â”€ Endpoints â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 @app.post("/api/fuse")
 async def fuse_endpoint(request: FuseRequest):
-    """Agent 1: Signal Fusion — ingest and fuse multi-source signals"""
+    """Agent 1: Signal Fusion â€” ingest and fuse multi-source signals"""
     start = time.time()
     try:
         payload = request.model_dump()
@@ -122,7 +123,7 @@ async def fuse_endpoint(request: FuseRequest):
 
 @app.post("/api/detect")
 async def detect_endpoint(request: DetectRequest):
-    """Agent 2: Crisis Detection — classify and score crises"""
+    """Agent 2: Crisis Detection â€” classify and score crises"""
     start = time.time()
     try:
         fused_data = request.model_dump()
@@ -139,7 +140,7 @@ async def detect_endpoint(request: DetectRequest):
 
 @app.post("/api/allocate")
 async def allocate_endpoint(request: AllocateRequest):
-    """Agent 3: Resource Allocation — optimize resource deployment"""
+    """Agent 3: Resource Allocation â€” optimize resource deployment"""
     start = time.time()
     try:
         crises_data = request.model_dump()
@@ -157,7 +158,7 @@ async def allocate_endpoint(request: AllocateRequest):
 
 @app.post("/api/execute")
 async def execute_endpoint(request: ExecuteRequest):
-    """Agent 4: Action Execution — simulate execution of a response action"""
+    """Agent 4: Action Execution â€” simulate execution of a response action"""
     start = time.time()
     try:
         action = request.model_dump()
@@ -174,7 +175,7 @@ async def execute_endpoint(request: ExecuteRequest):
 
 @app.post("/api/verify")
 async def verify_endpoint(request: VerifyRequest):
-    """Agent 5: Verification — cross-check crisis against new contradicting signals"""
+    """Agent 5: Verification â€” cross-check crisis against new contradicting signals"""
     start = time.time()
     try:
         payload = request.model_dump()
@@ -189,19 +190,21 @@ async def verify_endpoint(request: VerifyRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-STAKEHOLDER_SYSTEM = """You are a crisis communications officer for CIRO, Karachi's AI-powered \
+DEFAULT_STAKEHOLDER_SYSTEM = """You are a crisis communications officer for CIRO, Karachi's AI-powered \
 crisis response system. Generate realistic, broadcast-ready stakeholder notifications in response \
 to confirmed crisis events. Each message must be urgent, specific, and actionable.
 
 Stakeholder types and tone:
-  public      → bilingual (Urdu + English), simple language, clear evacuation/safety instructions
-  hospital    → clinical, specific bed/staff/ETA numbers, professional
-  emergency   → dispatch-style, GPS coordinates, unit IDs, ETA
-  utility     → technical, feeder/grid/pipe IDs, safety shutdown instructions
-  transport   → route IDs, diversions, passenger-facing language
-  media       → situation report format with numbers and status
+  public      â†’ bilingual (Urdu + English), simple language, clear evacuation/safety instructions
+  hospital    â†’ clinical, specific bed/staff/ETA numbers, professional
+  emergency   â†’ dispatch-style, GPS coordinates, unit IDs, ETA
+  utility     â†’ technical, feeder/grid/pipe IDs, safety shutdown instructions
+  transport   â†’ route IDs, diversions, passenger-facing language
+  media       â†’ situation report format with numbers and status
 
-Return ONLY valid JSON — no markdown, no text outside the JSON object."""
+Return ONLY valid JSON â€” no markdown, no text outside the JSON object."""
+
+STAKEHOLDER_SYSTEM = get_agent_system_prompt("stakeholders", DEFAULT_STAKEHOLDER_SYSTEM)
 
 @app.post("/api/stakeholders")
 async def stakeholders_endpoint(request: StakeholderRequest):
@@ -271,9 +274,15 @@ Generate exactly 6 stakeholder notifications. Return this JSON:
   ]
 }}
 
-Make every message specific to the crisis data above — no generic placeholders."""
+Make every message specific to the crisis data above â€” no generic placeholders."""
 
-        result, tokens = call_llm(STAKEHOLDER_SYSTEM, user_message, temperature=0.4, max_tokens=2500)
+        result, tokens = call_llm(
+            STAKEHOLDER_SYSTEM,
+            user_message,
+            temperature=0.4,
+            max_tokens=2500,
+            agent_key="stakeholders",
+        )
         latency = (time.time() - start) * 1000
         response = build_response(result, latency, tokens)
         append_log("/api/stakeholders", response)
@@ -305,7 +314,7 @@ async def get_logs():
 
 @app.delete("/api/logs")
 async def clear_logs():
-    """Clear all execution logs — use before a fresh demo run"""
+    """Clear all execution logs â€” use before a fresh demo run"""
     execution_logs.clear()
     return {"message": "Logs cleared", "timestamp": datetime.now(timezone.utc).isoformat()}
 
@@ -338,7 +347,7 @@ async def get_baseline():
 @app.get("/")
 async def root():
     return {
-        "system": "CIRO — Crisis Intelligence & Response Orchestrator",
+        "system": "CIRO â€” Crisis Intelligence & Response Orchestrator",
         "version": "1.0.0",
         "city": "Karachi, Pakistan",
         "status": "operational",
@@ -356,3 +365,5 @@ async def root():
             "GET  /api/baseline"
         ]
     }
+
+
