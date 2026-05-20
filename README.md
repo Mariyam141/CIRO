@@ -77,7 +77,7 @@ All agents use **Groq `llama-3.3-70b-versatile`** with:
 
 ---
 
-## Tech Stack
+## Overall Architecture & Tech Stack
 
 **Backend** (`/backend/`)
 - Python 3.11 + FastAPI
@@ -90,6 +90,23 @@ All agents use **Groq `llama-3.3-70b-versatile`** with:
 - Zustand (global state)
 - react-native-maps (Karachi map powered by Google Maps API)
 - axios (HTTP client)
+
+---
+
+## Integration & APIs Used
+
+### 1. Google Antigravity Integration (Mandatory Requirement)
+Antigravity was used as our **primary AI orchestration environment**. All agent planning, task coordination, and codebase engineering was tracked natively within Antigravity. Agent reasoning traces (`.jsonl` logs) are included in the repository to prove end-to-end Antigravity orchestration.
+
+### 2. Real APIs
+- **Groq Cloud API:** Powers all 5 agents using `llama-3.3-70b-versatile` for blazing-fast (sub-second) reasoning and JSON extraction.
+- **Google Maps API:** Renders real-world topological views of Karachi, plotting crises dynamically based on lat/lng coordinates.
+
+### 3. Mock APIs & Simulated Feeds
+To demonstrate the system's ability to fuse data safely without exposing real sensitive data, we built highly realistic mock data streams:
+- `social_feed.json`: Simulates messy, unstructured Roman Urdu and English citizen complaints.
+- `weather_feed.json`: Simulates a mock weather API returning precipitation and heat alerts.
+- `traffic_feed.json`: Simulates road congestion data to dynamically route ambulances.
 
 ---
 
